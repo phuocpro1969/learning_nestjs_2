@@ -36,5 +36,6 @@
 		"*.tsx": "typescriptreact",
 		".env.*": "dotenv"
 	},
-	"javascript.updateImportsOnFileMove.enabled": "always"
+	"javascript.updateImportsOnFileMove.enabled": "always",
+	"cSpell.words": ["datasources", "signin"]
 }
