@@ -1,0 +1,40 @@
+{
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
+	"editor.fontLigatures": true,
+	"editor.formatOnSave": true,
+	"files.insertFinalNewline": true,
+	"breadcrumbs.enabled": true,
+	"editor.rulers": [80, 120],
+	"files.trimTrailingWhitespace": true,
+	"workbench.statusBar.visible": true,
+	"cSpell.enabledLanguageIds": [
+		"javascript",
+		"javascriptreact",
+		"markdown",
+		"html",
+		"vue",
+		"plaintext",
+		"text",
+		"typescript",
+		"typescriptreact",
+		"yml"
+	],
+	"files.exclude": {
+		"**/.git": true,
+		"**/.svn": true,
+		"**/.hg": true,
+		"**/CVS": true,
+		"**/.DS_Store": true
+		// "**/node_modules": true
+	},
+	"files.associations": {
+		".sequelizerc": "javascript",
+		".stylelintrc": "json",
+		".prettierrc": "json",
+		"*.tsx": "typescriptreact",
+		".env.*": "dotenv"
+	},
+	"javascript.updateImportsOnFileMove.enabled": "always"
+}
