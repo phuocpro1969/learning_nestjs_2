@@ -39,5 +39,5 @@
 		".env.*": "dotenv"
 	},
 	"javascript.updateImportsOnFileMove.enabled": "always",
-	"cSpell.words": ["datasources", "pactum", "signin"]
+	"cSpell.words": ["datasources", "Detele", "pactum", "signin"]
 }

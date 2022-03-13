@@ -18,10 +18,5 @@ content-type: application/json
 }
 
 ###
-POST http://localhost:3333/auth/signup HTTP/1.1
-content-type: application/json
-
-{
-    "email": "admin@admin.com"
-
-}
+GET http://localhost:3333/users/me HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjE1LCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY0NzE3MjU0MSwiZXhwIjoxNjQ3MTczNDQxfQ.QS2zwB7363cwyq2gk4I993xW9QvEp1hBFJIWP9f9T3c

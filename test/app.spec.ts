@@ -4,6 +4,7 @@ import { AppModule } from "./../src/app.module";
 import { PrismaService } from "../src/prisma/prisma.service";
 import * as pactum from "pactum";
 import { AuthDto } from "../src/auth/dto/auth.dto";
+import { CreateBookmarkDto, EditBookmarkDto } from "src/bookmark/dto";
 
 describe("AppController (e2e)", () => {
 	let app: INestApplication;
@@ -41,8 +42,8 @@ describe("AppController (e2e)", () => {
 		};
 
 		describe("Signup", () => {
-			it("throw if email is not valid", async () => {
-				return await pactum
+			it("throw if email is not valid", () => {
+				return pactum
 					.spec()
 					.post("/auth/signup")
 					.withBody({
@@ -51,8 +52,8 @@ describe("AppController (e2e)", () => {
 					.expectStatus(400);
 			});
 
-			it("throw if password is not valid", async () => {
-				return await pactum
+			it("throw if password is not valid", () => {
+				return pactum
 					.spec()
 					.post("/auth/signup")
 					.withBody({
@@ -65,8 +66,8 @@ describe("AppController (e2e)", () => {
 				return pactum.spec().post("/auth/signup").expectStatus(400);
 			});
 
-			it("should signup", async () => {
-				return await pactum
+			it("should signup", () => {
+				return pactum
 					.spec()
 					.post("/auth/signup")
 					.withBody(dto)
@@ -101,40 +102,143 @@ describe("AppController (e2e)", () => {
 					.spec()
 					.post("/auth/signin")
 					.withBody(dto)
-					.expectStatus(200);
+					.expectStatus(200)
+					.stores("token", "access_token");
 			});
 		});
 	});
 
 	describe("Users", () => {
 		describe("Get Me", () => {
-			it.todo("should signup");
+			it("Should get current user", () => {
+				return pactum
+					.spec()
+					.get("/users/me")
+					.withHeaders({ Authorization: "Bearer $S{token}" })
+					.expectStatus(200);
+			});
 		});
-
 		describe("Edit User", () => {
-			it.todo("should signup");
+			const editUserDto = {
+				firstName: "Phan",
+				lastName: "Phuoc",
+			};
+			it("Should edit current user", () => {
+				return pactum
+					.spec()
+					.patch("/users")
+					.withHeaders({ Authorization: "Bearer $S{token}" })
+					.withBody(editUserDto)
+					.expectStatus(200)
+					.expectBodyContains(editUserDto.firstName)
+					.expectBodyContains(editUserDto.lastName);
+			});
 		});
 	});
 
 	describe("Bookmarks", () => {
-		describe("Create Bookmarks", () => {
-			it.todo("should signup");
+		describe("Get empty bookmarks", () => {
+			it("should get bookmarks", () => {
+				return pactum
+					.spec()
+					.get("/bookmarks")
+					.withHeaders({
+						Authorization: "Bearer $S{token}",
+					})
+					.expectStatus(200)
+					.expectBody([]);
+			});
 		});
 
-		describe("Get Bookmarks", () => {
-			it.todo("should signup");
+		describe("Create bookmark", () => {
+			const dto: CreateBookmarkDto = {
+				title: "First Bookmark",
+				link: "https://www.youtube.com/watch?v=d6WC5n9G_sM",
+			};
+			it("should create bookmark", () => {
+				return pactum
+					.spec()
+					.post("/bookmarks")
+					.withHeaders({
+						Authorization: "Bearer $S{token}",
+					})
+					.withBody(dto)
+					.expectStatus(201)
+					.stores("bookmarkId", "id");
+			});
 		});
 
-		describe("Get Bookmarks by Id", () => {
-			it.todo("should signup");
+		describe("Get bookmarks", () => {
+			it("should get bookmarks", () => {
+				return pactum
+					.spec()
+					.get("/bookmarks")
+					.withHeaders({
+						Authorization: "Bearer $S{token}",
+					})
+					.expectStatus(200)
+					.expectJsonLength(1);
+			});
 		});
 
-		describe("Update Bookmarks", () => {
-			it.todo("should signup");
+		describe("Get bookmark by id", () => {
+			it("should get bookmark by id", () => {
+				return pactum
+					.spec()
+					.get("/bookmarks/{id}")
+					.withPathParams("id", "$S{bookmarkId}")
+					.withHeaders({
+						Authorization: "Bearer $S{token}",
+					})
+					.expectStatus(200)
+					.expectBodyContains("$S{bookmarkId}");
+			});
 		});
 
-		describe("Detele Bookmarks", () => {
-			it.todo("should signup");
+		describe("Edit bookmark by id", () => {
+			const dto: EditBookmarkDto = {
+				title: "Kubernetes Course - Full Beginners Tutorial (Containerize Your Apps!)",
+				description:
+					"Learn how to use Kubernetes in this complete course. Kubernetes makes it possible to containerize applications and simplifies app deployment to production.",
+			};
+
+			it("should edit bookmark", () => {
+				return pactum
+					.spec()
+					.patch("/bookmarks/{id}")
+					.withPathParams("id", "$S{bookmarkId}")
+					.withHeaders({
+						Authorization: "Bearer $S{token}",
+					})
+					.withBody(dto)
+					.expectStatus(200)
+					.expectBodyContains(dto.title)
+					.expectBodyContains(dto.description);
+			});
+		});
+
+		describe("Delete bookmark by id", () => {
+			it("should delete bookmark", () => {
+				return pactum
+					.spec()
+					.delete("/bookmarks/{id}")
+					.withPathParams("id", "$S{bookmarkId}")
+					.withHeaders({
+						Authorization: "Bearer $S{token}",
+					})
+					.expectStatus(204);
+			});
+
+			it("should get empty bookmarks", () => {
+				return pactum
+					.spec()
+					.get("/bookmarks")
+					.withHeaders({
+						Authorization: "Bearer $S{token}",
+					})
+					.expectStatus(200)
+					.expectJsonLength(0);
+			});
 		});
 	});
 });

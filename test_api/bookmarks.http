@@ -1,0 +1,3 @@
+###
+GET http://localhost:3333/bookmarks HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjI2LCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlhdCI6MTY0NzE4OTg2MSwiZXhwIjoxNjQ3MTkwNzYxfQ.k_eRXqsKoVwzN0HafQDm5cDQJeWhhsqF3qQFsTfslSw
