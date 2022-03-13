@@ -23,6 +23,9 @@ $ npx prisma studio
 
 # migrate db
 $ npx prisma migrate dev
+
+# deploy migrate
+$ npx prisma migrate deploy
 ```
 
 ## Test

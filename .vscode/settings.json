@@ -5,6 +5,8 @@
 	"editor.fontLigatures": true,
 	"editor.formatOnSave": true,
 	"files.insertFinalNewline": true,
+	"editor.bracketPairColorization.enabled": true,
+	"editor.guides.bracketPairs": "active",
 	"breadcrumbs.enabled": true,
 	"editor.rulers": [80, 120],
 	"files.trimTrailingWhitespace": true,
@@ -37,5 +39,5 @@
 		".env.*": "dotenv"
 	},
 	"javascript.updateImportsOnFileMove.enabled": "always",
-	"cSpell.words": ["datasources", "signin"]
+	"cSpell.words": ["datasources", "pactum", "signin"]
 }
